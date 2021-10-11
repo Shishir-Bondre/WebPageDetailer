@@ -14,6 +14,8 @@ func main() {
 	text := getInputFromTerminal()
 	doc := getHTMLPageFromInternet(text)
 	printHtmlVersion(doc)
+	printPageTitle(doc)
+	printTheNumberOfHeadings(doc)
 	fmt.Println(doc)
 
 }
