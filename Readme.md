@@ -1,4 +1,4 @@
-# Webpage page details
+# Web page details
 
 This is a simple scraper to check information from webpages.
 
