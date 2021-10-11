@@ -102,3 +102,14 @@ func urlCallCount(doc *goquery.Document) int {
 
 	return count
 }
+
+func printTrueIfLoginFormExists(doc *goquery.Document) {
+	var loginForm bool = false
+	doc.Find("input").Each(func(index int, element *goquery.Selection) {
+		pass, _ := element.Attr("type")
+		if pass == "password" {
+			loginForm = true
+		}
+	})
+	fmt.Println("\n Page contains a login form: ", loginForm)
+}

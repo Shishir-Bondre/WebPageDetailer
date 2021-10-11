@@ -18,16 +18,9 @@ func main() {
 	printTheNumberOfHeadings(doc)
 	printInternalAndExternalLinks(doc)
 	printInacessibleLinks(doc)
+	printTrueIfLoginFormExists(doc)
 	fmt.Println(doc)
 
-}
-
-func getHTMLPageFromInternet(text string) *goquery.Document {
-	doc, err := goquery.NewDocument(text)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return doc
 }
 
 func getInputFromTerminal() string {
@@ -42,4 +35,12 @@ func getInputFromTerminal() string {
 
 	text = strings.Replace(text, "\n", "", -1)
 	return text
+}
+
+func getHTMLPageFromInternet(text string) *goquery.Document {
+	doc, err := goquery.NewDocument(text)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return doc
 }
