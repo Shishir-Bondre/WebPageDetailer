@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -67,4 +69,36 @@ func getInternalLinksSize(doc *goquery.Document) int {
 		}
 	})
 	return internalLinksCounter
+}
+
+func printInacessibleLinks(doc *goquery.Document) {
+	inacessible := urlCallCount(doc)
+	fmt.Println("\n Checking links..... ")
+	fmt.Println(" Amount of inacessible links: ", inacessible)
+
+}
+
+func urlCallCount(doc *goquery.Document) int {
+
+	links := getExternalLinks(doc)
+	count := 0
+	var wg sync.WaitGroup
+
+	// Parallel processing, can be delegated to the different function call
+	// TODO: Add function for parallel async processing
+
+	for _, link := range links {
+		wg.Add(1)
+		go func(url string) {
+			defer wg.Done()
+			_, err := http.Get(url)
+			if err != nil {
+				count++
+				fmt.Println("    Invalid link : ", url)
+			}
+		}(link)
+	}
+	wg.Wait()
+
+	return count
 }

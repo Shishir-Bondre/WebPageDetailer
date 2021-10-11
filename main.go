@@ -17,6 +17,7 @@ func main() {
 	printPageTitle(doc)
 	printTheNumberOfHeadings(doc)
 	printInternalAndExternalLinks(doc)
+	printInacessibleLinks(doc)
 	fmt.Println(doc)
 
 }
