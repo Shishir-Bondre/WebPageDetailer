@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -32,4 +33,38 @@ func getHeadingCount(doc *goquery.Document, heading string) int {
 	headCount := 0
 	doc.Find(heading).Each(func(i int, s *goquery.Selection) { headCount++ })
 	return headCount
+}
+
+func printInternalAndExternalLinks(doc *goquery.Document) {
+	externalLinks := getExternalLinksSize(doc)
+	internalLinks := getInternalLinksSize(doc)
+	fmt.Println("\n Amount of External Links: ", externalLinks)
+	fmt.Println("\n Amount of Internal Links: ", internalLinks)
+}
+
+func getExternalLinksSize(doc *goquery.Document) int {
+	externalLinks := getExternalLinks(doc)
+	return len(externalLinks)
+}
+
+func getExternalLinks(doc *goquery.Document) []string {
+	var external = []string{}
+	doc.Find("body a").Each(func(index int, element *goquery.Selection) {
+		link, _ := element.Attr("href")
+		if strings.Contains(link, "http") {
+			external = append(external, link)
+		}
+	})
+	return external
+}
+
+func getInternalLinksSize(doc *goquery.Document) int {
+	internalLinksCounter := 0
+	doc.Find("body a").Each(func(index int, element *goquery.Selection) {
+		link, _ := element.Attr("href")
+		if !strings.Contains(link, "http") {
+			internalLinksCounter++
+		}
+	})
+	return internalLinksCounter
 }

@@ -16,6 +16,7 @@ func main() {
 	printHtmlVersion(doc)
 	printPageTitle(doc)
 	printTheNumberOfHeadings(doc)
+	printInternalAndExternalLinks(doc)
 	fmt.Println(doc)
 
 }
