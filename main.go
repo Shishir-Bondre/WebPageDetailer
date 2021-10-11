@@ -13,6 +13,7 @@ import (
 func main() {
 	text := getInputFromTerminal()
 	doc := getHTMLPageFromInternet(text)
+	printHtmlVersion(doc)
 	fmt.Println(doc)
 
 }
